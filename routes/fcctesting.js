@@ -36,7 +36,7 @@ module.exports = function (app) {
   app.route('/_api/server.js')
     .get(function(req, res, next) {
       console.log('requested');
-      fs.readFile(__dirname + '/server.js', function(err, data) {
+      fs.readFile(process.cwd() + '/server.js', function(err, data) {
         if(err) return next(err);
         res.send(data.toString());
       });
@@ -44,7 +44,7 @@ module.exports = function (app) {
   app.route('/_api/routes/api.js')
     .get(function(req, res, next) {
       console.log('requested');
-      fs.readFile(__dirname + '/routes/api.js', function(err, data) {
+      fs.readFile(process.cwd() + '/routes/api.js', function(err, data) {
         if(err) return next(err);
         res.type('txt').send(data.toString());
       });
@@ -52,7 +52,7 @@ module.exports = function (app) {
   app.route('/_api/controllers/convertHandler.js')
     .get(function(req, res, next) {
       console.log('requested');
-      fs.readFile(__dirname + '/controllers/convertHandler.js', function(err, data) {
+      fs.readFile(process.cwd() + '/controllers/convertHandler.js', function(err, data) {
         if(err) return next(err);
         res.type('txt').send(data.toString());
       });
@@ -72,14 +72,20 @@ module.exports = function (app) {
       process.nextTick(() =>  res.json(testFilter(runner.report, req.query.type, req.query.n)));
     });
   });
-  app.get('/_api/app-info', function(req, res) {
-    var hs = Object.keys(res._headers)
-      .filter(h => !h.match(/^access-control-\w+/));
-    var hObj = {};
-    hs.forEach(h => {hObj[h] = res._headers[h]});
-    delete res._headers['strict-transport-security'];
-    res.json({headers: hObj});
+  
+  app.get('/_api/app-info', cors(), function(req, res) {
+    const headers = { ...res.getHeaders() };
+    delete headers['strict-transport-security'];
+
+    const filteredHeaders = Object.fromEntries(
+      Object.entries(headers).filter(
+        ([header]) => !header.match(/^access-control-\w+/i)
+      )
+    );
+
+    res.json({ headers: filteredHeaders });
   });
+
   
 };
 

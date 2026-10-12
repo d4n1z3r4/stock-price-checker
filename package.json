@@ -1,27 +1,20 @@
 {
-	"name": "boilerplate-project-stockchecker",
-	"version": "0.0.1",
-	"description": "InfoSec project for freeCodeCamp",
-	"scripts": {
-		"start": "node server.js"
-	},
-	"dependencies": {
-		"body-parser": "^1.15.2",
-		"chai": "^4.2.0",
-		"chai-http": "^4.3.0",
-		"cors": "^2.8.1",
-		"dotenv": "^8.2.0",
-		"express": "^4.14.0",
-		"helmet": "^3.1.0",
-		"mocha": "^3.2.0"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/freeCodeCamp/boilerplate-project-stockchecker"
-	},
-	"keywords": [
-		"node",
-		"express"
-	],
-	"license": "MIT"
+  "name": "boilerplate-project-stockchecker",
+  "version": "1.0.0",
+  "description": "freeCodeCamp Stock Price Checker",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "NODE_ENV=test mocha tests/2_functional-tests.js --timeout 15000"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "chai": "^4.3.10",
+    "chai-http": "^4.4.0",
+    "cors": "^2.8.6",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "helmet": "^3.23.3",
+    "mocha": "^10.4.0"
+  }
 }
